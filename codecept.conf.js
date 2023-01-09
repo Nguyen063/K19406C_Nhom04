@@ -1,24 +1,36 @@
-const { setHeadlessWhen, setCommonPlugins } = require('@codeceptjs/configure');
-// turn on headless mode when running with HEADLESS=true environment variable
-// export HEADLESS=true && npx codeceptjs run
-setHeadlessWhen(process.env.HEADLESS);
-
-// enable all common plugins https://github.com/codeceptjs/configure#setcommonplugins
-setCommonPlugins();
-
-/** @type {CodeceptJS.MainConfig} */
 exports.config = {
-  tests: './*_test.js',
   output: './output',
   helpers: {
-    Puppeteer: {
-      url: 'https://www.google.com',
+    Playwright: {
+      url: 'http://localhost',
       show: true,
-      windowSize: '1200x900'
+      browser: 'chromium',
+      windowSize: '1900x800'
     }
   },
   include: {
     I: './steps_file.js'
   },
-  name: 'k19406c_nhom04'
+  mocha: {},
+  bootstrap: null,
+  teardown: null,
+  hooks: [],
+  gherkin: {
+    features: './features/*.feature',
+    steps: './step_definitions/*.js'
+  },
+  plugins: {
+    screenshotOnFail: {
+      enabled: true
+    },
+    pauseOnFail: {},
+    retryFailedStep: {
+      enabled: true
+    },
+    tryTo: {
+      enabled: true
+    }
+  },
+  tests: 'feature/*.js',
+  name: 'demo-auto'
 }
